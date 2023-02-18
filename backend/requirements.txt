@@ -26,3 +26,5 @@ six==1.16.0
 soupsieve==2.4
 tqdm==4.64.1
 urllib3==1.26.14
+fastapi==0.79.0
+uvicorn==0.17.6
