@@ -14,8 +14,10 @@ function SearchResultChip({ item, setQuery }: Props) {
       <p className="pl-3">{item}</p>
       <button
         onClick={() => {
-          setQuery(item);
-          navigate("search");
+          if (item) {
+            setQuery(item);
+            navigate("search");
+          }
         }}
         className="rounded-[100%] bg-[#0E3E61] p-2 hover:bg-[#6D5D82] transition-all"
       >

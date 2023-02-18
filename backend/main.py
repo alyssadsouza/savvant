@@ -1,8 +1,18 @@
 import json
 from fastapi import FastAPI
-from search_results import generate_search_results
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
+
+origins = ["*"]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 @app.get("/search")
 async def root(query: str):
@@ -12,4 +22,4 @@ async def root(query: str):
 
 @app.get("/popular-searches")
 async def root():
-    return {"message": ["iPhone 14, iPhone 13, Banana"]}
+    return {"message": ["iPhone 14", "iPhone 13", "Banana"]}
