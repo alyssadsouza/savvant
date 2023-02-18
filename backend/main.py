@@ -2,6 +2,10 @@ from fastapi import FastAPI
 
 app = FastAPI()
 
-@app.get("/")
+@app.get("/search")
+async def root(search: str):
+    return {"message": search}
+
+@app.get("/popular-searches")
 async def root():
-    return {"message": "Hello World"}
+    return {"message": ["iPhone 14, iPhone 13, Banana"]}
