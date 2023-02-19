@@ -41,7 +41,7 @@ const Home = ({ setQuery }: Props) => {
         <div
           className={`${
             popularSearches ? "max-h-[800px] p-8" : "max-h-0 p-0"
-          } transition-all duration-500 overflow-hidden fixed bottom-0 w-full h-1/3 flex flex-col items-center justify-center bg-white/20`}
+          } transition-all duration-500 overflow-hidden fixed bottom-0 w-full flex flex-col items-center justify-center bg-white/20`}
         >
           <h2 className="text-xl">Other people have searched for...</h2>
           <div className="flex m-8">
