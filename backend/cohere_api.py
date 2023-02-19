@@ -40,12 +40,29 @@ response = co.classify(
   inputs=all_reviews,
   examples=examples,
 )
-print(response.classifications)
+# print(response.classifications)
 print(len(response.classifications))
 
-with open('log.txt', 'w') as f:
-  for i in response.classifications:
+positive_reviews = []
+negative_reviews = []
 
-    f.write(str(i))
-    f.write('\n')
-    k = str(i).replace("'", "")
+for i in response.classifications:
+  if i.prediction == "positive":
+    positive_reviews.append(i)
+  elif i.prediction == "negative":
+    negative_reviews.append(i)
+
+def sortByConfidence(a):
+  return a.confidence
+  
+positive_reviews.sort(reverse=True, key=sortByConfidence)
+negative_reviews.sort(reverse=True, key=sortByConfidence)
+for i in positive_reviews[:3]:
+  print(i)
+# print(negative_reviews[:3])
+# with open('log.txt', 'w') as f:
+#   for i in response.classifications:
+
+#     f.write(str(i))
+#     f.write('\n')
+#     k = str(i).replace("'", "")
