@@ -26,7 +26,6 @@ def get_adjectives(reviews: list) -> list:
                         valid_tokens.append(tokenType[0])
         except:
             pass
-
     return valid_tokens
 
 # Generates a graph based on frequency of words from input list

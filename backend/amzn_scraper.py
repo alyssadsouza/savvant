@@ -49,7 +49,6 @@ class AmznCrawler:
         while True:
             self.get_page()
             self.get_page_reviews()
-            print(self.review_request)
             if self.page_reviews:
                 for review in self.page_reviews:
                     self.all_reviews.append(review.text.lower().strip())
