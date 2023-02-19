@@ -141,7 +141,7 @@ const SearchResults = ({ query }: Props) => {
                 <div className="flex flex-row w-fit h-1/4">
                   <div className="flex flex-col justify-center bg-white/10 p-4 rounded-xl w-fit text-center">
                     <p className="mb-3 text-sm">Positive Reviews</p>
-                    <p className="mb-2 text-3xl text-[#1EE29C]">
+                    <p className="mb-2 text-3xl text-[#49d188]">
                       {results.positive_review_count}
                     </p>
                     <p className="text-sm">
@@ -153,7 +153,7 @@ const SearchResults = ({ query }: Props) => {
                   </div>
                   <div className="flex flex-col justify-center bg-white/10 p-4 rounded-xl w-fit ml-6 text-center">
                     <p className="mb-3 text-sm">Negative Reviews</p>
-                    <p className="mb-2 text-3xl text-[#E78080]">
+                    <p className="mb-2 text-3xl text-[#f15252]">
                       {results.negative_review_count}
                     </p>
                     <p className="text-sm">
