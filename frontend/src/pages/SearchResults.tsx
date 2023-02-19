@@ -1,7 +1,8 @@
-import { ReactComponent as ToolTip } from "../assets/tooltip.svg";
+import ToolTip from "../components/ToolTip";
 import { useEffect, useState } from "react";
 import axios, { AxiosResponse } from "axios";
 import { ReactComponent as Spinner } from '../assets/spinner.svg';
+import StarRating from "../components/StarRating";
 
 type Props = {
   query: string;
@@ -28,7 +29,7 @@ const SearchResults = ({ query }: Props) => {
       );
       setResults(response.data.message);
     };
-    getSearchResults();
+    setTimeout(getSearchResults, 750);
   }, []);
 
   return (
@@ -37,7 +38,7 @@ const SearchResults = ({ query }: Props) => {
         <div className="w-full h-full flex flex-col justify-center items-center"><Spinner className="w-24 h-24 animate-spin" /></div>
       )}
       {results && (
-        <div className="h-full flex flex-col items-start justify-start">
+        <div className="h-full flex flex-col items-start justify-start animate-fadeIn">
           <div className="w-full flex flex-row h-[10vh] items-end">
             <a href="/" className="text-sm hover:underline text-[#6F98B6]">
               ← Back to Search
@@ -45,7 +46,7 @@ const SearchResults = ({ query }: Props) => {
           </div>
           <div className="h-[90vh]">
             <div className="w-full h-[15%] flex flex-row justify-between">
-              <h2 className="text-[#6F98B6] text-3xl py-4 w-6/12">
+              <h2 className="text-[#476F8B] text-3xl py-4 w-6/12">
                 I'm interested in...
                 <span className="block text-white py-2 text-4xl">
                   {results.search_query}
@@ -53,8 +54,9 @@ const SearchResults = ({ query }: Props) => {
               </h2>
               <div className="w-full flex flex-col items-end justify-center my-4">
                 <p className="text-2xl">{results.rating}/5</p>
+                <StarRating rating={results.rating} />
                 <div className="inline-flex items-center my-2">
-                  <ToolTip className="mx-2" />
+                  <ToolTip text={"kello this is a tooltip"} classes="mx-2 w-4 h-4" />
                   <p className="text-xl">Overall Rating</p>
                 </div>
               </div>
@@ -64,7 +66,7 @@ const SearchResults = ({ query }: Props) => {
                 <div className="flex flex-col bg-white/10 p-6 rounded-xl w-full mb-4 h-1/4">
                   <div className="inline-flex items-center pb-4">
                     <p>Top Word Results</p>
-                    <ToolTip className="mx-2" />
+                    <ToolTip text={"kello this is a tooltip"} classes="mx-2 w-4 h-4" />
                   </div>
                   <p className="text-2xl pt-2">
                     {Object.keys(results.top_words).at(0)},{" "}
@@ -75,44 +77,44 @@ const SearchResults = ({ query }: Props) => {
                 <div className="flex flex-col bg-white/10 rounded-xl p-6 h-[calc(75%_-_2rem)]">
                   <p className="mb-3">Reviews</p>
                   <div className="mb-8">
-                    <p className="text-[#DCBCD9] text-lg font-medium my-1">
+                    <p className="text-[#6F98B6] font-medium my-1">
                       Most Positive Review
                     </p>
-                    <p>{results.best_review}</p>
+                    <p className="text-sm">{results.best_review}</p>
                   </div>
                   <div>
-                    <p className="text-[#DCBCD9] text-lg font-medium my-1">
+                    <p className="text-[#6F98B6] font-medium my-1">
                       Most Negative Review
                     </p>
-                    <p>{results.worst_review}</p>
+                    <p className="text-sm">{results.worst_review}</p>
                   </div>
                 </div>
               </div>
               <div className="flex flex-col w-4/12">
                 <div className="flex flex-row w-fit h-1/4">
-                  <div className="flex flex-col bg-white/10 p-4 rounded-xl w-fit text-center">
+                  <div className="flex flex-col justify-center bg-white/10 p-4 rounded-xl w-fit text-center">
                     <p className="mb-3 text-sm">Positive Reviews</p>
-                    <p className="mb-2 text-lg text-[#1EE29C]">
+                    <p className="mb-2 text-3xl text-[#1EE29C]">
                       {results.positive_review_count}
                     </p>
                     <p className="text-sm">
                       of{" "}
                       {results.positive_review_count +
                         results.negative_review_count}
+                      {" "}reviews
                     </p>
-                    <p className="text-sm">reviews</p>
                   </div>
-                  <div className="flex flex-col bg-white/10 p-4 rounded-xl w-fit ml-6 text-center">
+                  <div className="flex flex-col justify-center bg-white/10 p-4 rounded-xl w-fit ml-6 text-center">
                     <p className="mb-3 text-sm">Negative Reviews</p>
-                    <p className="mb-2 text-lg text-[#E78080]">
+                    <p className="mb-2 text-3xl text-[#E78080]">
                       {results.negative_review_count}
                     </p>
                     <p className="text-sm">
                       of{" "}
                       {results.positive_review_count +
                         results.negative_review_count}
+                      {" "}reviews
                     </p>
-                    <p className="text-sm">reviews</p>
                   </div>
                   <div className="flex flex-col bg-white/10 justify-center p-4 rounded-xl w-fit ml-6 text-left text-white">
                     <p className="text-4xl">{results.confidence}%</p>
