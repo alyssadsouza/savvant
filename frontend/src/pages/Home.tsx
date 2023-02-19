@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import Header from "../components/Header";
 import SearchBar from "../components/SearchBar";
 import SearchResultChip from "../components/SearchResultChip";
-import axios, {AxiosResponse} from 'axios';
+import axios, { AxiosResponse } from "axios";
 
 type Props = {
   setQuery: React.Dispatch<React.SetStateAction<string>>;
@@ -16,7 +16,9 @@ const Home = ({ setQuery }: Props) => {
 
   useEffect(() => {
     const getPopularSearches = async () => {
-      const response: AxiosResponse<any> = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/popular-searches`);
+      const response: AxiosResponse<any> = await axios.get(
+        `${process.env.REACT_APP_BACKEND_URL}/popular-searches`
+      );
       setPopularSearchResults(response.data.message);
     };
     getPopularSearches();

@@ -12,8 +12,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home setQuery={setQuery} />} />
         <Route path="/how-it-works" element={<HowItWorks />} />
-        <Route path="/" element={<HowItWorks />} />
-        <Route path="/search" element={<SearchResults />} />
+        <Route path="/search" element={<SearchResults query={query} />} />
       </Routes>
     </Router>
   );
