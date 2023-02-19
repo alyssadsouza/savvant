@@ -3,6 +3,9 @@ module.exports = {
   content: ["./src/**/*.{html,tsx}"],
   theme: {
     extend: {
+      colors: {
+        black: "#1e1e1e"
+      },
       fontFamily: {
         sans: ['Inter', 'sans-serif'],
       },
@@ -13,7 +16,7 @@ module.exports = {
         }
       },
       animation: {
-        'fadeIn': 'appear 500ms ease-in-out',
+        'fadeIn': 'appear 300ms ease-in-out',
         'fadeInSlow': 'appear 1s ease-in-out',
       }
     },
