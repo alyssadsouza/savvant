@@ -12,7 +12,7 @@ function Header({ popularSearches, setPopularSearches } : Props) {
 		<p>logo</p>
 		<div>
 			<Link to="how-it-works" className="ml-8 text-white/70 hover:underline">How It Works</Link>
-			<button onClick={() => setPopularSearches(!popularSearches)} className="ml-8 text-white/70 hover:underline">See What Others Are Searching</button>
+			<button onClick={() => setPopularSearches(!popularSearches)} className="ml-8 text-white/70 hover:underline">{!popularSearches ? "See" : "Hide"} What Others Are Searching</button>
 		</div>
 	</div>
   );
