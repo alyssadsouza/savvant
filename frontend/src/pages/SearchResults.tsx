@@ -1,6 +1,7 @@
 import { ReactComponent as ToolTip } from "../assets/tooltip.svg";
 import { useEffect, useState } from "react";
 import axios, { AxiosResponse } from "axios";
+import { ReactComponent as Spinner } from '../assets/spinner.svg';
 
 type Props = {
   query: string;
@@ -32,6 +33,9 @@ const SearchResults = ({ query }: Props) => {
 
   return (
     <div className="w-screen h-screen bg-gradient-to-r overflow-y-hidden overflow-x-hidden from-[#0D324D] to-[#7F5A83] text-white px-12">
+      {!results && (
+        <div className="w-full h-full flex flex-col justify-center items-center"><Spinner className="w-24 h-24 animate-spin" /></div>
+      )}
       {results && (
         <div className="h-full flex flex-col items-start justify-start">
           <div className="w-full flex flex-row h-[10vh] items-end">
