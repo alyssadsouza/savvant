@@ -26,7 +26,7 @@ const Home = ({ setQuery }: Props) => {
 
   return (
     <div className="w-screen h-screen bg-gradient-to-r from-[#0D324D] to-[#7F5A83] text-white">
-      <div className="h-full flex flex-col items-center justify-between">
+      <div className="h-full flex flex-col animate-fadeIn items-center justify-between">
         <Header
           popularSearches={popularSearches}
           setPopularSearches={setPopularSearches}
@@ -42,7 +42,7 @@ const Home = ({ setQuery }: Props) => {
         </div>
         <div
           className={`${
-            popularSearches ? "max-h-[800px] p-8" : "max-h-0 p-0"
+            popularSearches ? "max-h-[800px] p-8 opacity-100" : "max-h-0 p-0 opacity-0"
           } transition-all duration-500 overflow-hidden fixed bottom-0 w-full flex flex-col items-center justify-center bg-white/20`}
         >
           <h2 className="text-xl">Other people have searched for...</h2>
