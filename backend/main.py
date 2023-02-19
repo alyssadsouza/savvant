@@ -18,7 +18,7 @@ app.add_middleware(
 async def root(query: str):
     return {
         "message": {
-            "rating": 1,
+            "rating": 3.5,
             "top_words": {
                 "Rubbish": 1,
                 "Trash": 2
