@@ -1,7 +1,9 @@
 import cohere
 from cohere.classify import Example
 from amzn_scraper import AmznCrawler
-from models import SearchResult
+from models import SearchResults
+from statistics import mean
+
 co = cohere.Client('ZTY4iwGbLdVMXbOywgi4GeCcnztKertKS9yUHvCs')
 
 examples=[
@@ -20,6 +22,8 @@ examples=[
   Example("I bought it from the website", "neutral"),
   Example("I used the product this morning", "neutral"),
   Example("The product arrived yesterday", "neutral"),
+  Example("I love this product", "positive"),
+  Example("Durable, good price", "positive")
 ]
 
 # TEST INPUTS
@@ -59,15 +63,21 @@ def generate_pos_neg(res_classify):
 
     return (positive_reviews, negative_reviews)
 
-def getSeachResults(search):
-  inputs = AmznCrawler("Iphone 13")
-  inputs.get_all_reviews()
-
-  all_reviews = [i for i in inputs.all_reviews if len(i) > 0]
-
+def get_cohere_results(all_reviews):
   response = co.classify(
     model='large',
     inputs=all_reviews,
     examples=examples,
   )
   pos_neg = generate_pos_neg(response)
+  confidence = mean([i.confidence for i in pos_neg[0]] + [i.confidence for i in pos_neg[1]])
+
+  return {
+    "positive_review_count": len(pos_neg[0]),
+    "negative_review_count": len(pos_neg[1]),
+    "positive_reviews": [i.input for i in pos_neg[0]],
+    "negative_reviews": [i.input for i in pos_neg[1]],
+    "best_review": pos_neg[0][0].input,
+    "worst_review": pos_neg[1][0].input,
+    "confidence": confidence,
+  }

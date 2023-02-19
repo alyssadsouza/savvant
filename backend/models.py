@@ -10,3 +10,16 @@ class SearchResults():
     self.confidence = confidence,
     self.search_query = search_query,
     self.img = img
+
+  def toJSON(self):
+    return {
+      "rating":self.rating,
+      "top_words":self.top_words,
+      "positive_review_count":self.positive_review_count,
+      "negative_review_count":self.negative_review_count,
+      "best_review":self.best_review,
+      "worst_review":self.worst_review,
+      "confidence":self.confidence,
+      "search_query":self.search_query,
+      "img":self.img
+    }
