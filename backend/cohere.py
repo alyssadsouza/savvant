@@ -1,5 +1,4 @@
 import cohere
-import json
 from cohere.classify import Example
 from amzn_scraper import AmznCrawler
 co = cohere.Client('ZTY4iwGbLdVMXbOywgi4GeCcnztKertKS9yUHvCs')
