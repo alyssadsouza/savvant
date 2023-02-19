@@ -1,7 +1,8 @@
-import { useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import Header from "../components/Header";
 import SearchBar from "../components/SearchBar";
 import SearchResultChip from "../components/SearchResultChip";
+import axios, {AxiosResponse} from 'axios';
 
 type Props = {
   setQuery: React.Dispatch<React.SetStateAction<string>>;
@@ -9,7 +10,17 @@ type Props = {
 
 const Home = ({ setQuery }: Props) => {
   const [popularSearches, setPopularSearches] = useState<boolean>(false);
-  const popularSearchResults = useMemo(() => ["iPhone 14", "Banana"], []);
+  const [popularSearchResults, setPopularSearchResults] = useState<
+    Array<string>
+  >([]);
+
+  useEffect(() => {
+    const getPopularSearches = async () => {
+      const response: AxiosResponse<any> = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/popular-searches`);
+      setPopularSearchResults(response.data.message);
+    };
+    getPopularSearches();
+  }, []);
 
   return (
     <div className="w-screen h-screen bg-gradient-to-r from-[#0D324D] to-[#7F5A83] text-white">
@@ -27,17 +38,15 @@ const Home = ({ setQuery }: Props) => {
           </p>
           <SearchBar setQuery={setQuery} />
         </div>
-        <div className={`${popularSearches ? "max-h-[800px] p-8" : "max-h-0 p-0"} transition-all duration-500 overflow-hidden fixed bottom-0 w-full h-1/3 flex flex-col items-center justify-center bg-white/20`}>
-          <button
-            onClick={() => setPopularSearches(false)}
-            className="absolute top-5 hover:text-slate-400 transition-all"
-          >
-            ↓
-          </button>
+        <div
+          className={`${
+            popularSearches ? "max-h-[800px] p-8" : "max-h-0 p-0"
+          } transition-all duration-500 overflow-hidden fixed bottom-0 w-full flex flex-col items-center justify-center bg-white/20`}
+        >
           <h2 className="text-xl">Other people have searched for...</h2>
           <div className="flex m-8">
-            {popularSearchResults.map((item) => (
-              <SearchResultChip item={item} setQuery={setQuery} />
+            {popularSearchResults?.map((item) => (
+              <SearchResultChip item={item} setQuery={setQuery} key={item} />
             ))}
           </div>
         </div>

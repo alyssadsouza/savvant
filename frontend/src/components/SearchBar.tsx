@@ -15,9 +15,11 @@ function SearchBar({ setQuery }: Props) {
     <form
       onSubmit={(e) => {
         e.preventDefault();
-        setQuery(search);
-        setSearch("");
-        navigate("search");
+        if (search) {
+          setQuery(search);
+          setSearch("");
+          navigate("search");
+        }
       }}
     >
       <div className="bg-white px-2 py-1 rounded-[100px] my-4">
@@ -30,9 +32,11 @@ function SearchBar({ setQuery }: Props) {
         />
         <button
           onClick={() => {
-            setQuery(search);
-            setSearch("");
-            navigate("search");
+            if (search) {
+              setQuery(search);
+              setSearch("");
+              navigate("search");
+            }
           }}
           className="rounded-[100%] bg-[#0E3E61] p-3 hover:bg-[#6D5D82] transition-all"
         >
