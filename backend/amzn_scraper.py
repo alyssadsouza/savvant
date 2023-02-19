@@ -10,6 +10,7 @@ class AmznCrawler:
         self.headers = HEADERS
         self.product_request = f"https://www.amazon.ca/s?k={self.product}"
         self.page_num = 0
+        self.rating = None
 
     def get_asin(self):
         self.product_page = requests.get(self.product_request,
@@ -20,11 +21,15 @@ class AmznCrawler:
         self.product_div = self.product_soup.find(
             "div", {"data-component-type": "s-search-result"})
         self.asin = self.product_div['data-asin']
+        self.product_img = self.product_soup.find(
+            "img", {"class": "s-image"})
+        self.img = self.product_img['src']
 
     def get_page(self, page_num=None):
         self.url = f'https://www.amazon.ca/product-reviews/{self.asin}/ref=cm_cr_arp_d_paging_btm_next_2?pageNumber='
         self.page_num += 1 if page_num is None else page_num
         self.review_request = self.url + str(self.page_num)
+
 
     def get_page_reviews(self):
         self.review_page = requests.get(self.review_request,
@@ -32,7 +37,12 @@ class AmznCrawler:
         self.soup = BeautifulSoup(self.review_page.content, "html.parser")
         self.page_reviews = self.soup.find_all(
             "span", {"class": "review-text-content"})
-
+        if self.rating is None:
+            rating = self.soup.find(
+                "i",{"data-hook": "average-star-rating"}
+            )
+            self.rating = rating.text.split(" ")[0]
+        
     def get_all_reviews(self):
         self.all_reviews = []
         self.get_asin()
