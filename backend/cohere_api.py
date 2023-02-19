@@ -1,6 +1,7 @@
 import cohere
 from cohere.classify import Example
 from amzn_scraper import AmznCrawler
+from models import SearchResult
 co = cohere.Client('ZTY4iwGbLdVMXbOywgi4GeCcnztKertKS9yUHvCs')
 
 examples=[
@@ -28,41 +29,45 @@ examples=[
 #   "The product was not too bad",
 # ]
 
-inputs = AmznCrawler("Iphone 13")
-inputs.get_all_reviews()
+# inputs = AmznCrawler("Iphone 13")
+# inputs.get_all_reviews()
 
-all_reviews = [i for i in inputs.all_reviews if len(i) > 0]
-# print(type(all_reviews))
-# print(len(all_reviews))
+# all_reviews = [i for i in inputs.all_reviews if len(i) > 0]
 
-response = co.classify(
-  model='large',
-  inputs=all_reviews,
-  examples=examples,
-)
-# print(response.classifications)
-print(len(response.classifications))
+# response = co.classify(
+#   model='large',
+#   inputs=all_reviews,
+#   examples=examples,
+# )
 
-positive_reviews = []
-negative_reviews = []
+#Pass response.classifications as parameter
+def generate_pos_neg(res_classify):
+    positive_reviews = []
+    negative_reviews = []
 
-for i in response.classifications:
-  if i.prediction == "positive":
-    positive_reviews.append(i)
-  elif i.prediction == "negative":
-    negative_reviews.append(i)
+    for i in res_classify:
+      if i.prediction == "positive":
+        positive_reviews.append(i)
+      elif i.prediction == "negative":
+        negative_reviews.append(i)
 
-def sortByConfidence(a):
-  return a.confidence
-  
-positive_reviews.sort(reverse=True, key=sortByConfidence)
-negative_reviews.sort(reverse=True, key=sortByConfidence)
-for i in positive_reviews[:3]:
-  print(i)
-# print(negative_reviews[:3])
-# with open('log.txt', 'w') as f:
-#   for i in response.classifications:
+    def sortByConfidence(a):
+      return a.confidence
+      
+    positive_reviews.sort(reverse=True, key=sortByConfidence)
+    negative_reviews.sort(reverse=True, key=sortByConfidence)
 
-#     f.write(str(i))
-#     f.write('\n')
-#     k = str(i).replace("'", "")
+    return (positive_reviews, negative_reviews)
+
+def getSeachResults(search):
+  inputs = AmznCrawler("Iphone 13")
+  inputs.get_all_reviews()
+
+  all_reviews = [i for i in inputs.all_reviews if len(i) > 0]
+
+  response = co.classify(
+    model='large',
+    inputs=all_reviews,
+    examples=examples,
+  )
+  pos_neg = generate_pos_neg(response)
