@@ -5,7 +5,7 @@
 Create virtual environment if it does not already exist:
 
 ```bash
-python3 - venv venv
+python3 -m venv venv
 ```
 
 Activate it:
