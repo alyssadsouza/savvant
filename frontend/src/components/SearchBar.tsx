@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ReactComponent as SearchIcon } from "../assets/search.svg";
+import Typewriter from "./Typewriter";
 
 type Props = {
   setQuery: React.Dispatch<React.SetStateAction<string>>;
@@ -8,8 +9,11 @@ type Props = {
 
 function SearchBar({ setQuery }: Props) {
   const navigate = useNavigate();
-  const [placeholder, setPlaceholder] = useState<string>("iPhone 14");
   const [search, setSearch] = useState<string>("");
+  /* for the typing placeholder animation */
+  const placeholders = ["iPhone 14", "LG Monitor", "Beats Headphones"];
+  const [placeholder, setPlaceholder] = useState<string>("");
+  Typewriter(setPlaceholder, placeholders);
 
   return (
     <form
