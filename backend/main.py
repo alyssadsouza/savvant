@@ -24,4 +24,4 @@ async def root(query: str):
 
 @app.get("/popular-searches")
 async def root():
-    return {"message": ["iPhone 14, iPhone 13, Banana"]}
+    return {"message": ["iphone 13", "echo dot 5th gen", "anker portable charger"]}

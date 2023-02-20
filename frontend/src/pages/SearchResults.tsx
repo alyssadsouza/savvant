@@ -33,7 +33,7 @@ const SearchResults = ({ query }: Props) => {
       const response: AxiosResponse<any> = await axios.get(
         `${process.env.REACT_APP_BACKEND_URL}/search?query=${query}`
       );
-      setResults(response.data.message);
+      setResults(JSON.parse(response.data.message));
     };
     // setTimeout(getSearchResults, 750);
     getSearchResults();
@@ -53,6 +53,8 @@ const SearchResults = ({ query }: Props) => {
     }),
     [results]
   );
+
+  console.log(results);
 
   return (
     <div className="w-screen h-screen bg-gradient-to-r overflow-y-hidden overflow-x-hidden from-[#0D324D] to-[#7F5A83] text-white px-12">
@@ -80,12 +82,12 @@ const SearchResults = ({ query }: Props) => {
               ← Back to Search
             </a>
           </div>
-          <div className="h-[90vh]">
+          <div className="h-[90vh] w-full">
             <div className="w-full h-[15%] my-4 flex flex-row justify-between">
               <h2 className="text-[#476F8B] text-3xl py-4 w-6/12">
                 I'm interested in...
                 <span className="block text-white py-2 text-4xl">
-                  {results.search_query}
+                  "{results.search_query}"
                 </span>
               </h2>
               <div className="w-full flex flex-col items-end justify-center my-4">
@@ -93,7 +95,7 @@ const SearchResults = ({ query }: Props) => {
                 <StarRating rating={results.rating} />
                 <div className="inline-flex items-center my-2">
                   <ToolTip
-                    text={"kello this is a tooltip"}
+                    text={"This is the overall rating given to the product by averaging all customer review ratings."}
                     classes="mx-2 w-4 h-4"
                   />
                   <p className="text-xl">Overall Rating</p>
@@ -107,7 +109,7 @@ const SearchResults = ({ query }: Props) => {
                     <div className="inline-flex items-center">
                       <p>Top Word Results</p>
                       <ToolTip
-                        text={"kello this is a tooltip"}
+                        text={"These are the words that appeared most frequently in customer reviews for the product."}
                         classes="mx-2 w-4 h-4"
                       />
                     </div>
@@ -122,15 +124,14 @@ const SearchResults = ({ query }: Props) => {
                     {Object.keys(results.top_words).at(2)}
                   </p>
                 </div>
-                <div className="flex flex-col bg-white/10 rounded-xl p-6 h-[calc(75%_-_2rem)]">
-                  <p className="mb-3">Reviews</p>
-                  <div className="mb-8">
+                <div className="flex flex-col justify-between h-[calc(75%_-_2rem)]">
+                <div className="bg-white/10 rounded-xl p-6 h-[calc(50%_-_0.5rem)]">
                     <p className="text-[#6F98B6] font-medium my-1">
                       Most Positive Review
                     </p>
                     <p className="text-sm">"{results.best_review}"</p>
                   </div>
-                  <div>
+                  <div className="bg-white/10 rounded-xl p-6 h-[calc(50%_-_0.5rem)]">
                     <p className="text-[#6F98B6] font-medium my-1">
                       Most Negative Review
                     </p>
@@ -147,8 +148,8 @@ const SearchResults = ({ query }: Props) => {
                     </p>
                     <p className="text-sm">
                       of{" "}
-                      {results.positive_review_count +
-                        results.negative_review_count}{" "}
+                      {Number(results.positive_review_count) +
+                        Number(results.negative_review_count)}{" "}
                       reviews
                     </p>
                   </div>
@@ -165,12 +166,12 @@ const SearchResults = ({ query }: Props) => {
                     </p>
                   </div>
                   <div className="flex flex-col bg-white/10 justify-center p-4 rounded-xl w-fit ml-6 text-left text-white">
-                    <p className="text-4xl">{results.confidence}%</p>
+                    <p className="text-4xl">{Math.round(results.confidence * 100)}%</p>
                     <p>Confidence</p>
                     <p>in metrics</p>
                   </div>
                 </div>
-                <div className="bg-white/10 rounded-xl w-full h-[calc(75%_-_2rem)] mt-4">
+                <div className="bg-white rounded-xl w-full h-[calc(75%_-_2rem)] mt-4">
                   <div className="h-full w-full p-8 text-center">
                     <img
                       src={results.img}
@@ -181,7 +182,7 @@ const SearchResults = ({ query }: Props) => {
                       href={results.img}
                       target="_blank"
                       rel="noreferrer"
-                      className="my-1 text-xs text-white/50 hover:text-white/70 truncate block w-full"
+                      className="my-1 text-xs text-black/50 hover:text-black/70 truncate block w-full"
                     >
                       Source: <span className="underline">{results.img}</span>
                     </a>

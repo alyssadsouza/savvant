@@ -66,7 +66,7 @@ def generate_pos_neg(res_classify):
 def get_cohere_results(all_reviews):
   response = co.classify(
     model='large',
-    inputs=all_reviews,
+    inputs=all_reviews[:96],
     examples=examples,
   )
   pos_neg = generate_pos_neg(response)

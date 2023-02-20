@@ -46,7 +46,7 @@ class AmznCrawler:
     def get_all_reviews(self):
         self.all_reviews = []
         self.get_asin()
-        while True:
+        while True and len(self.all_reviews) <= 500:
             self.get_page()
             self.get_page_reviews()
             if self.page_reviews:
