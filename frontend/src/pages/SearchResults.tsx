@@ -35,7 +35,8 @@ const SearchResults = ({ query }: Props) => {
       );
       setResults(response.data.message);
     };
-    setTimeout(getSearchResults, 750);
+    // setTimeout(getSearchResults, 750);
+    getSearchResults();
   }, []);
 
   const data = useMemo(

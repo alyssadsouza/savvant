@@ -12,9 +12,7 @@ def generate_search_results(search):
   cohere_results = get_cohere_results(all_reviews)
 
   adjectives = get_adjectives(all_reviews)
-  print(adjectives)
   top_words = get_top_words(adjectives, 10)
-  print(top_words)
 
   return SearchResults(
     rating=inputs.rating,
